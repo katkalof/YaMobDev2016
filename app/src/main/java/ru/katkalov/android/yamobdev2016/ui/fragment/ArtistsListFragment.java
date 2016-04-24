@@ -67,7 +67,6 @@ public class ArtistsListFragment extends Fragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.artist_list);
         mRecyclerView.setHasFixedSize(true);
 
-
         mAdapter = new ArtistsAdapter(new ArrayList<Artist>());
 
         mAdapter.setOnErrorClickListener(new ArtistsAdapter.OnItemClickListener() {

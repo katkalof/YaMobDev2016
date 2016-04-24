@@ -5,4 +5,5 @@
     <dimen name="text_small">14sp</dimen>
     <dimen name="text_big">16sp</dimen>
     <dimen name="image_small">108dp</dimen>
+    <dimen name="recyclerview_space">3dp</dimen>
 </resources>
