@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">yaTest</string>
+    <string name="artists">Artists</string>
+    <string name="try_again">Try again</string>
+    <string name="load_more">Load more</string>
+    <string name="biography">Biography</string>
+    <string name="snackbar_text">Check internet connection</string>
+
+
+    <plurals name="numberOfSongs">
+        <item quantity="one">%d song</item>
+        <item quantity="other">%d songs</item>
+    </plurals>
+
+    <string name="dot">   &#183;   </string>
+
+    <plurals name="numberOfAlbums">
+        <item quantity="one">%d album</item>
+        <item quantity="other">%d albums</item>
+    </plurals>
+
+
+</resources>
+
+

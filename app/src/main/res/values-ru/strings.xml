@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="artists">Исполнители</string>
+    <string name="try_again">Попробовать снова</string>
+    <string name="biography">Биография</string>
+    <string name="load_more">Загрузить больше</string>
+    <string name="snackbar_text">Проверьте интернет соединение</string>
+
+
+    <plurals name="numberOfSongs">
+        <item quantity="one">%d песня</item>
+        <item quantity="few">%d песни</item>
+        <item quantity="many">%d песен</item>
+        <item quantity="other">%d песен</item>
+    </plurals>
+
+
+    <plurals name="numberOfAlbums">
+        <item quantity="one">%d альбом</item>
+        <item quantity="few">%d альбома</item>
+        <item quantity="many">%d альбомов</item>
+        <item quantity="other">%d альбомов</item>
+    </plurals>
+</resources>
