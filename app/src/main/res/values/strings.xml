@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">yaTest</string>
+    <string name="app_name">YaMobDev2016 by katkalov</string>
     <string name="artists">Artists</string>
     <string name="try_again">Try again</string>
     <string name="load_more">Load more</string>
@@ -12,7 +12,7 @@
         <item quantity="other">%d songs</item>
     </plurals>
 
-    <string name="dot">   &#183;   </string>
+    <string name="dot">&#183;</string>
 
     <plurals name="numberOfAlbums">
         <item quantity="one">%d album</item>
