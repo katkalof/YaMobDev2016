@@ -12,7 +12,7 @@
         <item quantity="other">%d songs</item>
     </plurals>
 
-    <string name="dot">&#183;</string>
+    <string name="dot">&#160;&#160;&#160;&#183;&#160;&#160;&#160;</string>
 
     <plurals name="numberOfAlbums">
         <item quantity="one">%d album</item>
