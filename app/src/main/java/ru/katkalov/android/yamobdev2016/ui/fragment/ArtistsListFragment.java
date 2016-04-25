@@ -136,7 +136,8 @@ public class ArtistsListFragment extends Fragment {
         //Проверяем наличие базы данных
         if (mDBHelper.isEmpty()) {
             // Проверяем подключение к интернету, если нет то показываем фрагмент с кнопкой перепопробовать
-            if (isNetworkAvailable() && isOnline()) {
+//          isOnline не работает в эмуляторе
+            if (isNetworkAvailable()) {
                 new DBDownloader().execute();
                 //пока закачивается показываем фрагмент заглушку
                 //как загрузилось ставим фрагмент со списком
