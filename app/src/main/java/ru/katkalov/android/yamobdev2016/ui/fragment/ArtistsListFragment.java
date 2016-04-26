@@ -81,6 +81,11 @@ public class ArtistsListFragment extends Fragment {
             public void onItemClick(View view, int position) {
                 getFragmentManager()
                         .beginTransaction()
+//                        .setCustomAnimations(R.animator.slide_to_left,R.animator.slide_to_right)
+
+                        .setCustomAnimations(
+                                R.animator.slide_to_left, R.animator.slide_out_left,
+                                R.animator.slide_to_right, R.animator.slide_out_right)
                         .replace(R.id.container, ArtistFragment.newInstance(mAdapter.getItem(position)))
                         .addToBackStack(null)
                         .commit();
