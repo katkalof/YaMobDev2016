@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -18,35 +17,32 @@ import android.view.ViewGroup;
 
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 import ru.katkalov.android.yamobdev2016.R;
 import ru.katkalov.android.yamobdev2016.model.Artist;
 import ru.katkalov.android.yamobdev2016.model.ArtistDatabaseHelper;
+import ru.katkalov.android.yamobdev2016.model.RetrofitDBDownloader;
 import ru.katkalov.android.yamobdev2016.ui.recyclerview.ArtistsAdapter;
 import ru.katkalov.android.yamobdev2016.ui.recyclerview.EndlessRecyclerViewScrollListener;
 import ru.katkalov.android.yamobdev2016.ui.view.ErrorView;
 
 public class ArtistsListFragment extends Fragment {
 
-    private ActionBar mActionBar;
+    private static final int DOWNLOADS_NUMBER = 30;
     private View mLoadingView;
     private ErrorView mErrorView;
     private Picasso mPicasso;
     private RecyclerView mRecyclerView;
     private ArtistDatabaseHelper mDBHelper;
-    private static final int DOWNLOADS_NUMBER = 30;
     private ArtistsAdapter mAdapter;
-
 
     @Nullable
     @Override
@@ -110,7 +106,6 @@ public class ArtistsListFragment extends Fragment {
                 fetchArtistsFromDB();
             }
         });
-
         downloadDatabase();
 
         return rootView;
@@ -119,7 +114,7 @@ public class ArtistsListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (mActionBar != null) {
             mActionBar.setTitle(R.string.artists);
             mActionBar.setSubtitle(null);
@@ -138,18 +133,37 @@ public class ArtistsListFragment extends Fragment {
     }
 
     private void downloadDatabase() {
+        mLoadingView.setVisibility(View.VISIBLE);
         //Проверяем наличие базы данных
         if (mDBHelper.isEmpty()) {
             // Проверяем подключение к интернету, если нет то показываем фрагмент с кнопкой перепопробовать
-//          isOnline не работает в эмуляторе
+            // isOnline не работает в эмуляторе
             if (isNetworkAvailable()) {
-                new DBDownloader().execute();
-                //пока закачивается показываем фрагмент заглушку
-                //как загрузилось ставим фрагмент со списком
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl("http://download.cdn.yandex.net/")
+//                        .baseUrl("http://download.cdn.yandex.net/mobilization-2016/artists.json/")
+//                        .baseUrl("http://cache-default01f.cdn.yandex.net/download.cdn.yandex.net/")
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
+                Call<List<Artist>> repos = retrofit.create(RetrofitDBDownloader.class).downloadDB();
+                repos.enqueue(new Callback<List<Artist>>() {
+                    @Override
+                    public void onResponse(Call<List<Artist>> call, Response<List<Artist>> response) {
+                        mDBHelper.addArtist(response.body());
+                        fetchArtistsFromDB();
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Artist>> call, Throwable t) {
+                        mErrorView.setVisibility(View.VISIBLE);
+                        mLoadingView.setVisibility(View.GONE);
+                        Snackbar.make(mRecyclerView, R.string.error_download, Snackbar.LENGTH_LONG).show();
+                    }
+                });
             } else {
                 mErrorView.setVisibility(View.VISIBLE);
                 mLoadingView.setVisibility(View.GONE);
-                Snackbar.make(mRecyclerView, R.string.snackbar_text, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(mRecyclerView, R.string.error_internet, Snackbar.LENGTH_LONG).show();
             }
         } else {
             //Работаем с существующей базой
@@ -186,59 +200,5 @@ public class ArtistsListFragment extends Fragment {
             e.printStackTrace();
         }
         return false;
-    }
-
-    private class DBDownloader extends AsyncTask<Void, Void, Boolean> {
-
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        String resultJson = "";
-
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mLoadingView.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // получаем данные с внешнего ресурса
-            //Загружаем их в базу
-            try {
-                URL url = new URL("http://download.cdn.yandex.net/mobilization-2016/artists.json");
-
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuilder sb = new StringBuilder();
-
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);
-                }
-                resultJson = sb.toString();
-                mDBHelper.addArtist(Artist.fromJsonArray(new JSONArray(resultJson)));
-            } catch (IOException e) {
-                //cancel
-                e.printStackTrace();
-                return false;
-            } catch (JSONException e) {
-                //cancel
-                e.printStackTrace();
-                return false;
-            }
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if (result) fetchArtistsFromDB();
-        }
     }
 }

@@ -4,7 +4,8 @@
     <string name="try_again">Try again</string>
     <string name="load_more">Load more</string>
     <string name="biography">Biography</string>
-    <string name="snackbar_text">Check internet connection</string>
+    <string name="error_internet">Check internet connection</string>
+    <string name="error_download">Downloading error</string>
 
 
     <plurals name="numberOfSongs">

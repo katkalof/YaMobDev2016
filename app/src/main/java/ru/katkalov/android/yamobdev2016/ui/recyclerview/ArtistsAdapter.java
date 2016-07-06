@@ -102,7 +102,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ViewHold
             //Имя
             ((ItemHolder) holder).titleView.setText(mArtists.get(position).getName());
             //Жанры
-            ((ItemHolder) holder).subTitleView.setText(mArtists.get(position).getGenres());
+            ((ItemHolder) holder).subTitleView.setText(mArtists.get(position).getGenres().toString());
             //Песни, Альбомы
             ((ItemHolder) holder).statView.setText(new StringBuilder()
                     .append(((ItemHolder) holder).itemView.getResources()

@@ -4,7 +4,8 @@
     <string name="try_again">Попробовать снова</string>
     <string name="biography">Биография</string>
     <string name="load_more">Загрузить больше</string>
-    <string name="snackbar_text">Проверьте интернет соединение</string>
+    <string name="error_internet">Проверьте интернет соединение</string>
+    <string name="error_download">Ошибка загрузки</string>
 
 
     <plurals name="numberOfSongs">

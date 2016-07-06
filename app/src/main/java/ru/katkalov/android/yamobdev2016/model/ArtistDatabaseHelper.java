@@ -7,6 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +29,7 @@ public class ArtistDatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_ARTIST_NAME = "name";
     private static final String KEY_ARTIST_GENRES = "genres";
     private static final String KEY_ARTIST_TRACKS = "tracks";
-    private static final String KEY_ARTIST_ALBUMS = "almubs";
+    private static final String KEY_ARTIST_ALBUMS = "albums";
     private static final String KEY_ARTIST_LINK = "ling";
     private static final String KEY_ARTIST_DESCRIPTION = "description";
     private static final String KEY_ARTIST_SMALL_COVER = "smallCover";
@@ -105,14 +109,13 @@ public class ArtistDatabaseHelper extends SQLiteOpenHelper {
             ContentValues values = new ContentValues();
             values.put(KEY_ARTIST_ID, artist.getId());
             values.put(KEY_ARTIST_NAME, artist.getName());
-            values.put(KEY_ARTIST_GENRES, artist.getGenres());
+            values.put(KEY_ARTIST_GENRES, new Gson().toJson(artist.getGenres()));
             values.put(KEY_ARTIST_TRACKS, artist.getCountTracks());
             values.put(KEY_ARTIST_ALBUMS, artist.getCountAlbums());
             values.put(KEY_ARTIST_LINK, artist.getLink());
             values.put(KEY_ARTIST_DESCRIPTION, artist.getDescription());
             values.put(KEY_ARTIST_SMALL_COVER, artist.getSmallCover());
             values.put(KEY_ARTIST_BIG_COVER, artist.getBigCover());
-
             // Notice how we haven't specified the primary key. SQLite auto increments the primary key column.
             db.insertOrThrow(TABLE_ARTISTS, null, values);
             db.setTransactionSuccessful();
@@ -136,17 +139,21 @@ public class ArtistDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(ARTISTS_SELECT_QUERY, null);
         try {
             if (cursor.moveToFirst()) {
+                Type collectionType = new TypeToken<List<String>>(){}.getType();
                 do {
+                    List<String> genres= new Gson().fromJson(cursor.getString(cursor.getColumnIndex(KEY_ARTIST_GENRES)), collectionType);
                     artists.add(new Artist(
                             cursor.getInt(cursor.getColumnIndex(KEY_ARTIST_ID)),
                             cursor.getString(cursor.getColumnIndex(KEY_ARTIST_NAME)),
-                            cursor.getString(cursor.getColumnIndex(KEY_ARTIST_GENRES)),
+                            genres,
                             cursor.getInt(cursor.getColumnIndex(KEY_ARTIST_TRACKS)),
                             cursor.getInt(cursor.getColumnIndex(KEY_ARTIST_ALBUMS)),
                             cursor.getString(cursor.getColumnIndex(KEY_ARTIST_LINK)),
                             cursor.getString(cursor.getColumnIndex(KEY_ARTIST_DESCRIPTION)),
-                            cursor.getString(cursor.getColumnIndex(KEY_ARTIST_SMALL_COVER)),
-                            cursor.getString(cursor.getColumnIndex(KEY_ARTIST_BIG_COVER))
+                            new Cover(
+                                    cursor.getString(cursor.getColumnIndex(KEY_ARTIST_SMALL_COVER)),
+                                    cursor.getString(cursor.getColumnIndex(KEY_ARTIST_BIG_COVER))
+                            )
                     ));
                 } while (cursor.moveToNext());
             }
