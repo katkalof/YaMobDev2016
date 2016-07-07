@@ -7,7 +7,7 @@ This is my realization of Yandex Mobile Developing School 2016 test task.
 -------
 * Fragment-oriented architecture
 * RecyclerView with [endless scroll](https://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews-and-RecyclerView)
-* AsyncTask and HttpURLConnection for download JSON-data
+* Retrofit2 and GSON for downloading and parsing JSON-data
 * SQLiteOpenHelper for cache data
 * Picasso for download and cache image
 * Parcelable for data transfer between fragments
