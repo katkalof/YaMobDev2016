@@ -2,6 +2,7 @@ package ru.katkalov.android.yamobdev2016.ui.recyclerview;
 
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,7 +103,7 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ViewHold
             //Имя
             ((ItemHolder) holder).titleView.setText(mArtists.get(position).getName());
             //Жанры
-            ((ItemHolder) holder).subTitleView.setText(mArtists.get(position).getGenres().toString());
+            ((ItemHolder) holder).subTitleView.setText(TextUtils.join(", ", mArtists.get(position).getGenres()));
             //Песни, Альбомы
             ((ItemHolder) holder).statView.setText(new StringBuilder()
                     .append(((ItemHolder) holder).itemView.getResources()

@@ -5,14 +5,17 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.leakcanary.RefWatcher;
 import com.squareup.picasso.Picasso;
 
+import ru.katkalov.android.yamobdev2016.Application;
 import ru.katkalov.android.yamobdev2016.R;
 import ru.katkalov.android.yamobdev2016.model.Artist;
 
@@ -20,7 +23,6 @@ public class ArtistFragment extends Fragment {
     private static final String ARG_ARTIST = "ARG_ARTIST";
     private Artist mArtist;
     private Picasso mPicasso;
-
     // Required empty public constructor
     public ArtistFragment() {}
 
@@ -29,7 +31,6 @@ public class ArtistFragment extends Fragment {
 
         Bundle args = new Bundle();
         args.putParcelable(ARG_ARTIST, artist);
-
         fragment.setArguments(args);
         return fragment;
     }
@@ -57,7 +58,7 @@ public class ArtistFragment extends Fragment {
                 .placeholder(R.drawable.ic_music_note_black_48dp)
                 .fit().centerCrop()
                 .into((ImageView) rootView.findViewById(R.id.artist_image));
-        ((TextView) rootView.findViewById(R.id.artist_subtitle)).setText(mArtist.getGenres().toString());
+        ((TextView) rootView.findViewById(R.id.artist_subtitle)).setText(TextUtils.join(", ", mArtist.getGenres()));
         StringBuilder sb = new StringBuilder();
         sb.append(getResources()
                 .getQuantityString(R.plurals.numberOfSongs, mArtist.getCountTracks(), mArtist.getCountTracks()));
@@ -72,6 +73,8 @@ public class ArtistFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
+        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
+        refWatcher.watch(this);
         mArtist = null;
         if ( mPicasso != null ) {
             mPicasso.shutdown();
