@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.squareup.leakcanary.RefWatcher;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
@@ -27,7 +26,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import ru.katkalov.android.yamobdev2016.Application;
 import ru.katkalov.android.yamobdev2016.R;
 import ru.katkalov.android.yamobdev2016.model.Artist;
 import ru.katkalov.android.yamobdev2016.model.ArtistDatabaseHelper;
@@ -125,13 +123,16 @@ public class ArtistsListFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
-        refWatcher.watch(this);
         if (mPicasso != null) {
             mPicasso.shutdown();
         }
         mPicasso = null;
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     private void downloadDatabase() {

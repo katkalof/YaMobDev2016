@@ -1,13 +1,25 @@
+buildscript{
+    repositories {
+        mavenCentral()
+        maven { url 'https://raw.github.com/Archinamon/GradleAspectJ-Android/master' }
+    }
+    dependencies{
+        classpath 'com.archinamon:android-gradle-aspectj:1.3.2'
+    }
+}
+
 apply plugin: 'com.android.application'
+apply plugin: 'com.archinamon.aspectj'
+
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23"
+    compileSdkVersion 24
+    buildToolsVersion "24"
 
     defaultConfig {
         applicationId "ru.katkalov.android.yamobdev2016"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 24
         versionCode 1
         versionName "1.0"
     }
@@ -19,12 +31,23 @@ android {
     }
 }
 
+aspectj {
+    weaveInfo true
+    ignoreErrors false
+    addSerialVersionUID false
+    logFileName "ajc_details.log"
+
+    interruptOnWarnings false
+    interruptOnErrors false
+    interruptOnFails true
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.0.0'
-    compile 'com.android.support:design:23.0.0'
-    compile 'com.android.support:recyclerview-v7:23.0.0'
+    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:design:24.0.0'
+    compile 'com.android.support:recyclerview-v7:24.0.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'

@@ -12,10 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.squareup.leakcanary.RefWatcher;
 import com.squareup.picasso.Picasso;
 
-import ru.katkalov.android.yamobdev2016.Application;
 import ru.katkalov.android.yamobdev2016.R;
 import ru.katkalov.android.yamobdev2016.model.Artist;
 
@@ -73,14 +71,18 @@ public class ArtistFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        RefWatcher refWatcher = Application.getRefWatcher(getActivity());
-        refWatcher.watch(this);
         mArtist = null;
         if ( mPicasso != null ) {
             mPicasso.shutdown();
         }
         mPicasso = null;
         super.onDestroyView();
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
 }
