@@ -12,8 +12,7 @@
         android:supportsRtl="true"
         android:name="ru.katkalov.android.yamobdev2016.Application"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.MainActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".ui.activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,5 +20,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

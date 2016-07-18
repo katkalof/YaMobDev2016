@@ -25,10 +25,12 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
         }
 
-        getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.container, new ArtistsListFragment())
-                .commitAllowingStateLoss();
+        if (savedInstanceState == null) {
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.container, new ArtistsListFragment())
+                    .commitAllowingStateLoss();
+        }
     }
 
 

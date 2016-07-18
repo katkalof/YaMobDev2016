@@ -12,7 +12,9 @@ public aspect LeakCanaryWatcher {
 
     before(): getFragmentsLeak() {
         Fragment fragment = (Fragment) thisJoinPoint.getTarget();
-        RefWatcher refWatcher = Application.getRefWatcher(fragment.getActivity());
-        refWatcher.watch(fragment);
+        if (fragment.getActivity() != null){
+            RefWatcher refWatcher = Application.getRefWatcher(fragment.getActivity());
+            refWatcher.watch(fragment);
+        }
     }
 }
