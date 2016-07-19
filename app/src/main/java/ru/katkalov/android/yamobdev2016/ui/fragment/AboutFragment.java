@@ -2,6 +2,7 @@ package ru.katkalov.android.yamobdev2016.ui.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -32,11 +33,14 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.send_email_to_developer:
-                Intent i = new Intent(Intent.ACTION_SEND);
-                i.setType("plain/text");
+                Intent i = new Intent(Intent.ACTION_SENDTO);
+                i.setType("text/plain");
+                i.setData(Uri.parse("mailto:"));
                 i.putExtra(Intent.EXTRA_EMAIL, getResources().getStringArray(R.array.emails));
                 i.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.email_theme));
-                startActivity(i);
+                if (i.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(i);
+                }
                 break;
         }
     }
