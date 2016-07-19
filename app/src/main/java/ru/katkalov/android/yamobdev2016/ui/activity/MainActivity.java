@@ -4,9 +4,11 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import ru.katkalov.android.yamobdev2016.R;
+import ru.katkalov.android.yamobdev2016.ui.fragment.AboutFragment;
 import ru.katkalov.android.yamobdev2016.ui.fragment.ArtistsListFragment;
 
 
@@ -29,10 +31,15 @@ public class MainActivity extends AppCompatActivity {
             getFragmentManager()
                     .beginTransaction()
                     .replace(R.id.container, new ArtistsListFragment())
-                    .commitAllowingStateLoss();
+                    .commit();
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main,menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -42,9 +49,20 @@ public class MainActivity extends AppCompatActivity {
                     getFragmentManager().popBackStack();
                 }
                 return true;
+            case R.id.menu_about:
+                getFragmentManager()
+                        .beginTransaction()
+                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out,
+                                android.R.animator.fade_in,android.R.animator.fade_out)
+                        .replace(R.id.container, new AboutFragment())
+                        .addToBackStack(null)
+                        .commit();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 
 }
