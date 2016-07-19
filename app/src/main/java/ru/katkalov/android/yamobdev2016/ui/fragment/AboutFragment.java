@@ -2,6 +2,7 @@ package ru.katkalov.android.yamobdev2016.ui.fragment;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -36,8 +37,9 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
                 Intent i = new Intent(Intent.ACTION_SENDTO);
                 i.setType("text/plain");
                 i.setData(Uri.parse("mailto:"));
-                i.putExtra(Intent.EXTRA_EMAIL, getResources().getStringArray(R.array.emails));
-                i.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.email_theme));
+                Resources res = getResources();
+                i.putExtra(Intent.EXTRA_EMAIL, res.getStringArray(R.array.emails));
+                i.putExtra(Intent.EXTRA_SUBJECT, res.getString(R.string.email_theme));
                 if (i.resolveActivity(getActivity().getPackageManager()) != null) {
                     startActivity(i);
                 }
