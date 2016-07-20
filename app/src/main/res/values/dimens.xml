@@ -6,4 +6,7 @@
     <dimen name="text_big">16sp</dimen>
     <dimen name="image_small">108dp</dimen>
     <dimen name="recyclerview_space">3dp</dimen>
+    <dimen name="notification_text_margin">48dp</dimen>
+    <dimen name="notification_padding">8dp</dimen>
+
 </resources>

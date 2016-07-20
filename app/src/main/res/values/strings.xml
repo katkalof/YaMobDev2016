@@ -45,6 +45,8 @@
         <item>katkalof@gmail.com</item>
     </string-array>
     <string name="email_theme">From YaMobDev2016 user</string>
+    <string name="ya_music">Yandex Music</string>
+    <string name="ya_radio">Yandex Radio</string>
 </resources>
 
 
