@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">YaMobDev2016 by katkalov</string>
+    <string name="app_name" translatable="false">YaMobDev2016 by katkalov</string>
     <string name="artists">Artists</string>
     <string name="try_again">Try again</string>
     <string name="load_more">Load more</string>
@@ -13,14 +13,14 @@
         <item quantity="other">%d songs</item>
     </plurals>
 
-    <string name="dot">&#160;&#160;&#160;&#183;&#160;&#160;&#160;</string>
+    <string name="dot" translatable="false">&#160;&#160;&#160;&#183;&#160;&#160;&#160;</string>
 
     <plurals name="numberOfAlbums">
         <item quantity="one">%d album</item>
         <item quantity="other">%d albums</item>
     </plurals>
 
-    <string name="about_app">
+    <string name="about_app" translatable="false">
         This is my realization of Yandex Mobile Developing School 2016 test task.
         \n\n
         Used:
@@ -41,7 +41,7 @@
 
     <string name="send_email_to_developer">Send Email To Developer</string>
 
-    <string-array name="emails">
+    <string-array name="emails" translatable="false">
         <item>katkalof@gmail.com</item>
     </string-array>
     <string name="email_theme">From YaMobDev2016 user</string>

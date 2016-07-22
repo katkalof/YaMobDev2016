@@ -1,5 +1,6 @@
 package ru.katkalov.android.yamobdev2016.ui.activity;
 
+import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        if(toolbar!=null){
+        if (toolbar != null) {
             toolbar.setTitle(R.string.artists);
             toolbar.setTitleTextColor(Color.WHITE);
             toolbar.setSubtitleTextColor(Color.WHITE);
@@ -37,32 +38,31 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main,menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        FragmentManager fragmentManager = getFragmentManager();
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (getFragmentManager().getBackStackEntryCount() > 0) {
-                    getFragmentManager().popBackStack();
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack();
                 }
                 return true;
             case R.id.menu_about:
-                getFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out,
-                                android.R.animator.fade_in,android.R.animator.fade_out)
-                        .replace(R.id.container, new AboutFragment())
-                        .addToBackStack(null)
-                        .commit();
-                return true;
+                if (fragmentManager.findFragmentByTag("AboutFragment") == null) {
+                    fragmentManager
+                            .beginTransaction()
+                            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out,
+                                    android.R.animator.fade_in, android.R.animator.fade_out)
+                            .replace(R.id.container, new AboutFragment(), "AboutFragment")
+                            .addToBackStack(null)
+                            .commit();
+                    return true;
+                }
         }
         return super.onOptionsItemSelected(item);
     }
-
-
-
-
 }

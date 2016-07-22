@@ -22,4 +22,9 @@
         <item quantity="many">%d альбомов</item>
         <item quantity="other">%d альбомов</item>
     </plurals>
+    <string name="email_theme">От пользователя YaMobDev2016</string>
+    <string name="fragment_about">О программе</string>
+    <string name="send_email_to_developer">Отправить сообщение разработчику</string>
+    <string name="ya_music">Яндекс Музыка</string>
+    <string name="ya_radio">Яндекс Радио</string>
 </resources>
