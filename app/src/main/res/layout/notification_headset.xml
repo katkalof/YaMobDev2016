@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/notification_padding"
+    android:paddingRight="@dimen/notification_padding">
+
+    <FrameLayout
+        android:id="@+id/ya_music"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ya_music" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/notification_text_margin"
+            android:layout_marginStart="@dimen/notification_text_margin"
+            android:gravity="center"
+            android:text="@string/ya_music"
+            android:textSize="@dimen/text_big" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="@color/background" />
+
+    <FrameLayout
+        android:id="@+id/ya_radio"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ya_radio" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/notification_text_margin"
+            android:layout_marginStart="@dimen/notification_text_margin"
+            android:gravity="center"
+            android:text="@string/ya_radio"
+            android:textSize="@dimen/text_big" />
+
+    </FrameLayout>
+
+</LinearLayout>

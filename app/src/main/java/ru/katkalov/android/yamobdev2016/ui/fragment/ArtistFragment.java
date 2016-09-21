@@ -68,21 +68,14 @@ public class ArtistFragment extends Fragment {
         return rootView;
     }
 
-
     @Override
-    public void onDestroyView() {
+    public void onDestroy() {
+        super.onDestroy();
         mArtist = null;
         if ( mPicasso != null ) {
             mPicasso.shutdown();
         }
         mPicasso = null;
-        super.onDestroyView();
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
     }
 
 }

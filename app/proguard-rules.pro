@@ -15,3 +15,32 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keep class ru.katkalov.android.yamobdev2016.model.Artist { *; }
+-keep class ru.katkalov.android.yamobdev2016.model.Cover { *; }
+
+# Picasso
+## https://github.com/square/picasso/ ##
+-dontwarn com.squareup.okhttp.**
+
+# Retrofit2
+## https://square.github.io/retrofit/ ##
+-dontwarn retrofit2.**
+-keep class retrofit2.** { *; }
+-keepattributes Exceptions
+-keepclasseswithmembers class * {
+    @retrofit2.http.* <methods>;
+}
+
+-dontwarn okio.**
+
+# GSON
+# class:		 +# Gson uses generic type information stored in a class file when working with fields. Proguard
+-keepattributes Signature
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+# Gson specific classes
+-keep class sun.misc.Unsafe { *; }
+#-keep class com.google.gson.stream.** { *; }
+# Application classes that will be serialized/deserialized over Gson
+-keep class com.google.gson.examples.android.model.** { *; }
